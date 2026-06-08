@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warehousing – Rapid Business Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; color: #333; }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed;
+      top: 0; width: 100%;
+      z-index: 1000;
+      background: rgba(14, 14, 26, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 20px 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: padding 0.35s ease;
+    }
+    .nav.scrolled { padding: 14px 44px; }
+    @media (max-width: 768px) {
+      .nav { background: rgba(14, 14, 26, 0.95); padding: 12px 20px; }
+      .nav.scrolled { padding: 12px 20px; }
+    }
+    .nav-logo img { height: 72px; transition: height 0.35s ease; }
+    .nav.scrolled .nav-logo img { height: 56px; }
+    @media (max-width: 768px) {
+      .nav-logo img { height: 44px; }
+      .nav.scrolled .nav-logo img { height: 44px; }
+    }
+
+    .nav-links { display: flex; list-style: none; gap: 0; align-items: center; }
+    .nav-links a {
+      color: #fff; text-decoration: none;
+      font-size: 15px; font-weight: 400;
+      letter-spacing: 0.08em; padding: 10px 13px;
+      text-transform: uppercase; transition: color 0.2s; white-space: nowrap;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #ccc; }
+
+    .has-dropdown { position: relative; list-style: none; }
+    .has-dropdown > a::after { content: ' ▾'; font-size: 9px; }
+    .dropdown-menu {
+      display: none; position: absolute;
+      top: calc(100% + 8px); right: 0;
+      background: rgba(14,14,26,0.96);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      min-width: 200px; padding: 6px 0;
+      border: 1px solid rgba(255,255,255,0.12); z-index: 999;
+    }
+    .has-dropdown:hover .dropdown-menu { display: block; }
+    .dropdown-menu li { list-style: none; }
+    .dropdown-menu li a {
+      display: block; padding: 11px 22px; color: #ccc;
+      text-decoration: none; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.09em; text-transform: uppercase;
+      white-space: nowrap; transition: color 0.2s, background 0.2s;
+    }
+    .dropdown-menu li a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+
+    .nav-more { position: relative; list-style: none; }
+    .nav-more > a { color: #fff; text-decoration: none; font-size: 13px; font-weight: 400;
+      letter-spacing: 0.1em; padding: 10px 11px; text-transform: uppercase; white-space: nowrap; }
+    .nav-more > a::after { content: ' ▾'; font-size: 9px; }
+    .nav-more-menu {
+      display: none; position: absolute;
+      top: calc(100% + 8px); right: 0;
+      background: rgba(14,14,26,0.96);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      min-width: 210px; padding: 6px 0;
+      border: 1px solid rgba(255,255,255,0.12); z-index: 999;
+    }
+    .nav-more.open .nav-more-menu { display: block; }
+    .nav-more-menu li { list-style: none; }
+    .nav-more-menu li a {
+      display: block; padding: 11px 22px; color: #ccc;
+      text-decoration: none; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.09em; text-transform: uppercase;
+      white-space: nowrap; transition: color 0.2s, background 0.2s;
+    }
+    .nav-more-menu li a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 6px; flex-shrink: 0;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: #fff; border-radius: 1px; transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (max-width: 768px) { .nav-links { display: none; } .hamburger { display: flex; } }
+
+    .mobile-menu {
+      display: none; flex-direction: column; position: fixed;
+      top: 80px; left: 0; right: 0;
+      background: rgba(14,14,26,0.97); z-index: 999;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      max-height: calc(100vh - 80px); overflow-y: auto;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      padding: 14px 24px; color: #fff; text-decoration: none;
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.1em; border-bottom: 1px solid rgba(255,255,255,0.07);
+      transition: background 0.2s;
+    }
+    .mobile-menu a:hover { background: rgba(255,255,255,0.06); }
+    .mobile-menu .mobile-sub { padding-left: 36px; font-size: 11px; color: rgba(255,255,255,0.65); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 140px 40px 52px;
+      background: #fff;
+      text-align: center;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 64px;
+      font-weight: 400;
+      color: #1a1a2e;
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .page-header-divider {
+      width: 52px; height: 2px;
+      background: #ccc; margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+      .page-header { padding: 110px 24px 40px; }
+      .page-header h1 { font-size: 36px; }
+    }
+
+    /* ── CONTENT SECTION ── */
+    .warehousing-section {
+      background: #fff;
+      padding: 60px 60px 80px;
+    }
+    .warehousing-inner {
+      display: flex;
+      gap: 60px;
+      max-width: 1160px;
+      margin: 0 auto;
+      align-items: flex-start;
+    }
+    .warehousing-text { flex: 1; }
+    .warehousing-text h4 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: #1a1a2e;
+      margin-bottom: 22px;
+      line-height: 1.35;
+    }
+    .warehousing-text p {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: #555;
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+    .warehousing-text ul {
+      list-style: disc;
+      margin: 0 0 28px 22px;
+      padding: 0;
+    }
+    .warehousing-text ul li {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: #555;
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+    .warehousing-text ul li strong {
+      color: #222;
+      font-weight: 700;
+    }
+
+    .warehousing-image {
+      flex-shrink: 0;
+      width: 400px;
+    }
+    .warehousing-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    @media (max-width: 960px) {
+      .warehousing-inner { flex-direction: column; gap: 40px; }
+      .warehousing-image { width: 100%; }
+      .warehousing-section { padding: 48px 30px 60px; }
+    }
+    @media (max-width: 600px) {
+      .warehousing-section { padding: 36px 20px 48px; }
+      .warehousing-text h4 { font-size: 20px; }
+      .warehousing-text p, .warehousing-text ul li { font-size: 16px; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0a0a0a; color: #888;
+      text-align: center; padding: 22px 20px 18px; font-size: 12.5px;
+    }
+  
+    /* -- FOOTER SOCIAL -- */
+    .footer-social { display: flex; justify-content: center; gap: 22px; margin-bottom: 14px; }
+    .footer-social a { color: #666; transition: color 0.2s; display: inline-flex; }
+    .footer-social a:hover { color: #fff; }
+    .footer-social svg { width: 20px; height: 20px; fill: currentColor; }
+    /* -- COOKIE BANNER -- */
+    .cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; background: #111827; color: #ccc; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; gap: 24px; z-index: 9999; font-family: 'Poppins', sans-serif; font-size: 13px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .cookie-accept { background: #fff; color: #111; border: none; padding: 8px 24px; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+    .cookie-accept:hover { background: #e0e0e0; }
+
+    /* ── ROUNDED BUTTONS ── */
+    .btn-contact, .drop-btn, .whatsapp-btn, .send-btn, .cta-link, .download-link, .modal-get-touch, .drop-btn, .inline-form .send-btn { border-radius: 6px !important; }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══ -->
+  <nav class="nav" id="mainNav">
+    <div class="nav-logo">
+      <img src="https://img1.wsimg.com/isteam/ip/33d05f15-3613-46a3-ac7f-b62364671f5c/Logo%20RBS%201%20(1).png" alt="RBS Logo" style="height:48px;">
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="rbs-home.html">Home</a></li>
+      <li><a href="rbs-about-us.html">About Us</a></li>
+      <li><a href="rbs-products-overview.html">Our Products Overview</a></li>
+      <li><a href="#" class="active">Warehousing</a></li>
+      <li><a href="rbs-msd-storage.html">MSD Storage</a></li>
+      <li><a href="rbs-allied-services.html">Allied Services</a></li>
+      <li><a href="rbs-contact-us.html">Contact Us</a></li>
+      <li class="has-dropdown">
+        <a href="#">Misc.</a>
+        <ul class="dropdown-menu">
+          <li><a href="rbs-vision-mission.html">Vision and Mission</a></li>
+          <li><a href="rbs-terms-conditions.html">Terms &amp; Conditions</a></li>
+        </ul>
+      </li>
+      <li class="nav-more" id="navMore" style="display:none;">
+        <a href="#" id="navMoreBtn">More</a>
+        <ul class="nav-more-menu" id="navMoreMenu"></ul>
+      </li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="rbs-home.html">Home</a>
+    <a href="rbs-about-us.html">About Us</a>
+    <a href="rbs-products-overview.html">Our Products Overview</a>
+    <a href="#">Warehousing</a>
+    <a href="rbs-msd-storage.html">MSD Storage</a>
+    <a href="rbs-allied-services.html">Allied Services</a>
+    <a href="rbs-contact-us.html">Contact Us</a>
+    <a href="#" class="mobile-sub">Vision and Mission</a>
+    <a href="#" class="mobile-sub">Terms &amp; Conditions</a>
+  </div>
+
+  <!-- ══ PAGE HEADER ══ -->
+  <div class="page-header">
+    <h1>Warehousing as a Strategic Capability</h1>
+    <div class="page-header-divider"></div>
+  </div>
+
+  <!-- ══ CONTENT ══ -->
+  <section class="warehousing-section">
+    <div class="warehousing-inner">
+
+      <div class="warehousing-text">
+        <h4>Integrated Electronics Parts Warehousing – Supporting Seamless PCBA Operations</h4>
+
+        <p>At <strong>Rapid Business Services LLC</strong>, our <strong>in-house electronics parts warehousing services</strong> are a critical extension of our PCBA capabilities. By managing component inventory directly within our operations, we provide customers with a <strong>more reliable, agile, and cost-effective assembly process</strong>.</p>
+
+        <ul>
+          <li>
+            <strong>Just-in-Time (JIT) Inventory Management</strong><br>
+            Minimize lead times and reduce excess inventory costs by aligning part availability with your production schedule.
+          </li>
+          <li>
+            <strong>Moisture-Sensitive Device (MSD) Storage</strong><br>
+            Climate-controlled storage with MSL (Moisture Sensitivity Level) compliance ensures part integrity for reflow and soldering.
+          </li>
+          <li>
+            <strong>Traceability &amp; Lot Control</strong><br>
+            Every part is stored with <strong>batch-level traceability</strong>, ensuring full transparency and compliance for regulated industries.
+          </li>
+          <li>
+            <strong>Buffer Stock for High-Mix/Low-Volume Builds</strong><br>
+            For prototyping and medium-scale production, we maintain strategic component buffers to support fast-turn PCBA needs.
+          </li>
+          <li>
+            <strong>Vendor-Managed Inventory (VMI) &amp; Customer Consignment Options</strong><br>
+            Flexible warehousing models tailored to reduce risk and optimize your supply chain.
+          </li>
+        </ul>
+
+        <p>By integrating our warehousing services directly into our <strong>PCBA design, prototyping, and manufacturing workflows</strong>, we create a <strong>one-stop solution</strong> for customers looking for <strong>efficiency, speed, and reliability</strong> in electronics manufacturing.</p>
+      </div>
+
+      <div class="warehousing-image">
+        <img src="https://img1.wsimg.com/isteam/ip/33d05f15-3613-46a3-ac7f-b62364671f5c/u9494526783_httpss.mj.runeG-px-pAWxA_warehouse.png/:/cr=t:0%25,l:0%25,w:100%25,h:100%25/rs=w:400,cg:true" alt="Warehousing facility">
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>Copyright &copy; 2025 Rapid Business Services &ndash; All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    const navLinks = document.getElementById('navLinks');
+    const navMore  = document.getElementById('navMore');
+    const moreMenu = document.getElementById('navMoreMenu');
+    const moreBtn  = document.getElementById('navMoreBtn');
+
+    function getNavItems() { return Array.from(navLinks.children).filter(li => li !== navMore); }
+    function resetNav() {
+      while (moreMenu.firstChild) { navLinks.insertBefore(moreMenu.firstChild, navMore); }
+      navMore.style.display = 'none';
+    }
+    function navOverflows() {
+      const navRect  = nav.getBoundingClientRect();
+      const logoRect = document.querySelector('.nav-logo').getBoundingClientRect();
+      return navLinks.scrollWidth > (navRect.right - 44 - logoRect.right - 16);
+    }
+    function adjustNav() {
+      if (window.innerWidth <= 768) { resetNav(); return; }
+      resetNav();
+      const items = getNavItems();
+      for (let i = items.length - 1; i >= 0; i--) {
+        if (!navOverflows()) break;
+        navMore.style.display = 'list-item';
+        moreMenu.insertBefore(items[i], moreMenu.firstChild);
+      }
+    }
+    window.addEventListener('resize', adjustNav);
+    document.fonts.ready.then(adjustNav);
+    adjustNav();
+
+    moreBtn.addEventListener('click', e => {
+      e.preventDefault();
+      navMore.classList.toggle('open');
+    });
+    document.addEventListener('click', e => {
+      if (!navMore.contains(e.target)) navMore.classList.remove('open');
+    });
+  </script>
+
+</body>
+</html>
