@@ -78,26 +78,6 @@
 
     @media (max-width: 600px) { .contact-block { padding: 28px 20px 0; } .contact-block h4 { font-size: 20px; } .contact-block .address, .contact-block .contact-link { font-size: 16px; } .map-wrap { height: 280px; } }
 
-    /* ── INLINE FORM ── */
-    .inline-form { display: none; padding: 0 0 40px; max-width: 600px; margin: 0 auto; text-align: left; }
-    .inline-form.open { display: block; }
-    .inline-form h3 { font-family: 'Poppins', sans-serif; font-size: 22px; font-weight: 400; color: #1a1a1a; margin-bottom: 22px; text-align: center; }
-    .inline-form .f-field {
-      width: 100%; padding: 14px 18px; margin-bottom: 14px;
-      border: 1px solid #d0d0d0; border-radius: 6px;
-      background: #fff; font-family: 'Poppins', sans-serif;
-      font-size: 15px; color: #444; outline: none; display: block;
-      transition: border-color 0.2s;
-    }
-    .inline-form .f-field:focus { border-color: #999; }
-    .inline-form textarea.f-field { height: 180px; resize: vertical; }
-    .inline-form .recaptcha-note { font-family: 'Poppins', sans-serif; font-size: 12px; color: #999; line-height: 1.6; text-align: center; margin-bottom: 20px; }
-    .inline-form .recaptcha-note a { color: #2a6acc; text-decoration: none; }
-    .inline-form .form-actions { display: flex; align-items: center; justify-content: center; gap: 22px; }
-    .inline-form .send-btn { background: #111; color: #fff; border: none; padding: 14px 42px; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
-    .inline-form .send-btn:hover { background: #333; }
-    .inline-form .cancel-lnk { background: none; border: none; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 14px; color: #2a6acc; text-decoration: underline; padding: 0; }
-
     /* ── FOOTER ── */
     footer { background: #0a0a0a; color: #888; text-align: center; padding: 22px 20px 18px; font-size: 12.5px; }
   
@@ -172,17 +152,7 @@
     <p class="address">8 The green #21073 Dover, DE 19901</p>
     <a class="contact-link" href="tel:+19492289802">+1 949 228 9802</a>
     <a class="contact-link" href="mailto:sales@rapidbizservices.com">sales@rapidbizservices.com</a>
-    <button class="drop-btn" onclick="toggleForm(this)">Drop Us a Line!</button>
-    <div class="inline-form">
-      <h3>Drop us a line!</h3>
-      <input class="f-field" type="text" placeholder="Name">
-      <input class="f-field" type="email" placeholder="Email*" required>
-      <textarea class="f-field" placeholder="Message"></textarea>
-      <p class="recaptcha-note">This site is protected by reCAPTCHA and the Google <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a> apply.</p>
-      <div class="form-actions">
-        <button class="send-btn">SEND</button>
-        <button class="cancel-lnk" onclick="cancelForm(this)">Cancel</button>
-      </div>
+    <button class="drop-btn">Drop Us a Line!</button>
     </div>
     <div class="map-wrap">
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3083.5!2d-75.5247!3d39.1582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c7a3c5c68b4e5d%3A0x6e1e2e8b8b8b8b8b!2s8+The+Green+%2321073%2C+Dover%2C+DE+19901!5e0!3m2!1sen!2sus!4v1700000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -199,17 +169,7 @@
     <p class="address">400 Spectrum Center Dr suit 1900, Irvine, CA, USA</p>
     <a class="contact-link" href="tel:+19492289802">+1 949 228 9802</a>
     <a class="contact-link" href="mailto:sales@rapidbizservices.com">sales@rapidbizservices.com</a>
-    <button class="drop-btn" onclick="toggleForm(this)">Drop Us a Line!</button>
-    <div class="inline-form">
-      <h3>Drop us a line!</h3>
-      <input class="f-field" type="text" placeholder="Name">
-      <input class="f-field" type="email" placeholder="Email*" required>
-      <textarea class="f-field" placeholder="Message"></textarea>
-      <p class="recaptcha-note">This site is protected by reCAPTCHA and the Google <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a> apply.</p>
-      <div class="form-actions">
-        <button class="send-btn">SEND</button>
-        <button class="cancel-lnk" onclick="cancelForm(this)">Cancel</button>
-      </div>
+    <button class="drop-btn">Drop Us a Line!</button>
     </div>
     <div class="map-wrap">
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3325.0!2d-117.7436!3d33.6603!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80dcde8d1a5c5c5c%3A0x1234567890abcdef!2s400+Spectrum+Center+Dr+%231900%2C+Irvine%2C+CA+92618!5e0!3m2!1sen!2sus!4v1700000000001" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -226,17 +186,7 @@
     <p class="address">30025 Alicia Parkway, Laguna Niguel, CA, USA</p>
     <a class="contact-link" href="tel:+19492289802">+1 949 228 9802</a>
     <a class="contact-link" href="mailto:sales@rapidbizservices.com">sales@rapidbizservices.com</a>
-    <button class="drop-btn" onclick="toggleForm(this)">Drop Us a Line!</button>
-    <div class="inline-form">
-      <h3>Drop us a line!</h3>
-      <input class="f-field" type="text" placeholder="Name">
-      <input class="f-field" type="email" placeholder="Email*" required>
-      <textarea class="f-field" placeholder="Message"></textarea>
-      <p class="recaptcha-note">This site is protected by reCAPTCHA and the Google <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a> apply.</p>
-      <div class="form-actions">
-        <button class="send-btn">SEND</button>
-        <button class="cancel-lnk" onclick="cancelForm(this)">Cancel</button>
-      </div>
+    <button class="drop-btn">Drop Us a Line!</button>
     </div>
     <div class="map-wrap">
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3318.5!2d-117.7077!3d33.5225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80dce7b2f0a1a1a1%3A0xabcdef1234567890!2s30025+Alicia+Pkwy%2C+Laguna+Niguel%2C+CA+92677!5e0!3m2!1sen!2sus!4v1700000000002" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -269,17 +219,6 @@
     document.addEventListener('click', e => { if (!navMore.contains(e.target)) navMore.classList.remove('open'); });
 
     /* ── INLINE FORM TOGGLE ── */
-    function toggleForm(btn) {
-      const form = btn.nextElementSibling;
-      btn.style.display = 'none';
-      form.classList.add('open');
-    }
-    function cancelForm(cancelBtn) {
-      const form = cancelBtn.closest('.inline-form');
-      const btn  = form.previousElementSibling;
-      form.classList.remove('open');
-      btn.style.display = 'inline-block';
-    }
   </script>
 
 </body>
